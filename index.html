@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>new</title>
+
+	
+	<style>
+		.contain div{
+			float: left;
+		}
+		input {
+			width: 100px;
+			height: 100px;
+			font-size: 40px;
+		}
+	</style>
+</head>
+<body>
+	<!-- <svg height="150" width="500">
+  <ellipse cx="240" cy="100" rx="220" ry="30" style="fill:purple" />
+  <ellipse cx="220" cy="70" rx="190" ry="20" style="fill:lime" />
+  <ellipse cx="210" cy="45" rx="170" ry="15" style="fill:yellow" />
+  Sorry, your browser does not support inline SVG. 
+</svg> -->
+
+	<div class="contain">
+	<div>
+    <canvas onmousemove="movement()" id="game" width="600px"; height="600px"; style="border:1px solid grey;background-color:black;"> <img id="img" src="cars/mainCar.png" style="background-color: red">
+       <img src="cars/enemyCar.png" id="ball2">
+       <img src="cars/enemyCar2.png" id="ball3">
+       <img src="cars/enemyCar3.png" id="ball4"> 
+   </canvas>
+
+    
+   </div> 
+	<a href="new.html" onclick="restart()"></a>
+</div>
+ <div><input id="sh"></div>
+</div>
+
+
+</body>
+<script>
+	xpos=300;
+	ypos=416;
+	xpos_width=75;
+	ypos_height=160;
+	x=0;
+	y=0;
+	b2x=200;
+	b2y=0;
+	b3x=100;
+	b3y=0;
+	b4x=400;
+	b4y=0;
+	dx=500;
+	dy=0;
+	cx=300;
+	cy=0;
+     fx=250;
+    fy=-500;
+    road_width=10;
+    road_height=80;
+
+    var width=60;
+    var height=150;
+    var r1x=280, r1y=0,r2y=170,r3y=300,r4y=480;
+                       
+    // var ge,gea;
+     var ge="";
+     var gea="";
+    
+  
+         	var canvas = document.getElementById('game');
+         	var ctx = canvas.getContext('2d');
+         window.onload=function(){
+         	var img =document.getElementById('img');
+         	 var img3 =document.getElementById('ball2');
+         	 var img4 =document.getElementById('ball3')
+         	 var img5 =document.getElementById('ball4')
+         	 var a=new Image();
+         	     a.src="cars/enemyCar2.png";
+         	     var b=new Image();
+         	     b.src="cars/enemyCar4..png";
+         	     var c=new Image();
+         	     c.src="cars/newcar.png";
+       		 var dr=ctx.drawImage(img4,b3x,b3y,width,height)
+       		ctx.drawImage(img,xpos,ypos,xpos_width,ypos_height);
+
+
+         	    
+         	
+            road();
+            var d=0;
+            function rand(){
+       	     d=Math.floor(Math.random()*canvas.width-width)
+            	
+            }
+            setInterval(rand,600)
+          
+         	set=setInterval(taiwo,100);
+       		function taiwo(){
+       		canvas.height=canvas.height;
+       		 road();
+       		 ctx.drawImage(img4,b3x,b3y,width,height)
+       		 ctx.drawImage(img5,x,y,width,height)
+       		 ctx.drawImage(a,dx,dy,width,height)
+       		 ctx.drawImage(b,cx,cy,width,height)
+       		 ctx.drawImage(c,fx,fy,width,height)
+       		
+       		ctx.drawImage(img,xpos,ypos,xpos_width,ypos_height);
+       		  cy+=14;
+       		 dy+=13;
+		 	y+=12;
+       		b2y+=11;
+       		b3y+=10;
+       		fy+=15
+       		if (sh.value>=200) {
+       			cy+=14.2;	
+       		 dy+=13.2;
+		 	y+=12.2;
+       		b2y+=11.2;
+       		b3y+=10.2;
+       		}
+       		
+       		if (b3y>=canvas.height) {
+                b3y=0; 
+                b3x=d+50;
+		 	}
+		 	if (y>=canvas.height) {
+                y=0; 
+                x=d-100
+		 	}
+		 	if (dy>=canvas.height) {
+                dy=0; 
+                dx=d+400;
+		 	}
+		 	if (cy>=canvas.height) {
+                cy=0; 
+                cx=d-200;
+		 	}
+		 	crashWith();
+		 	crashWith2();
+		 	crashWith3();
+		 	crashWith4();
+            count();
+
+
+		 	}
+
+		 		
+       		}
+       		var su=0
+       		function count(){
+       			su++
+       			sh.value=su
+       		}
+       		
+
+      
+       		function myFunction() {
+       			ctx.font = "50px Arial";
+       			ctx.fillStyle = "red";
+       			ctx.fillText("Game Over", canvas.width/2-100, canvas.height/2); 
+       			ctx.textAlign = "center";
+
+              }
+       	   function crashWith() {
+              var myleft =xpos+9;
+              var myright =xpos +(xpos_width);
+              var mytop = ypos;
+              var mybottom =ypos +(ypos_height);
+              var otherleft = b3x ;
+              var otherright =b3x +(width);
+              var othertop = b3y;
+              var otherbottom =b3y +(height);
+              crash=false;
+         if ((mybottom-20 < othertop) || (mytop+25 > otherbottom) || (myright-15 < otherleft) || (myleft +15> otherright)) {
+            crash = false;
+        }else{
+
+         clearInterval(set)
+         myFunction()
+         // alert('Game over')
+        }
+    } 
+
+     function crashWith2(){
+     	      var myleft2 =xpos+9;
+              var myright2 =xpos +(xpos_width);
+              var mytop2 = ypos;
+              var mybottom2 =ypos +(ypos_height);
+              var otherleft2 = x ;
+              var otherright2 =x +(width);
+              var othertop2 =y;
+              var otherbottom2 =y +(height);
+                crash=false;
+         if ((mybottom2-20 < othertop2) || (mytop2+25 > otherbottom2) || (myright2-15< otherleft2) || (myleft2 +15> otherright2)) {
+            crash = false;
+        }else{
+
+         clearInterval(set)
+         myFunction()
+           // alert('Game over')
+        }
+
+     }
+
+
+     function crashWith3(){
+     	      var myleft3 =xpos+9;
+              var myright3 =xpos +(xpos_width);
+              var mytop3 = ypos;
+              var mybottom3 =ypos +(ypos_height);
+              var otherleft3 = dx ;
+              var otherright3 =dx +(width);
+              var othertop3 =dy;
+              var otherbottom3 =dy +(height);
+                crash=false;
+         if ((mybottom3-20 < othertop3) || (mytop3+25 > otherbottom3) || (myright3-15 < otherleft3) || (myleft3+15>otherright3)) {
+            crash = false;
+        }else{
+
+         clearInterval(set)
+         myFunction()
+        }
+     }
+
+     function crashWith4(){
+     	      var myleft4 =xpos+9;
+              var myright4 =xpos +(xpos_width);
+              var mytop4 = ypos;
+              var mybottom4 =ypos +(ypos_height);
+              var otherleft4 = cx ;
+              var otherright4 =cx +(width);
+              var othertop4 =cy;
+              var otherbottom4 =cy +(height);
+                crash=false;
+         if ((mybottom4-20 < othertop4) || (mytop4+25 > otherbottom4) || (myright4-15 < otherleft4) || (myleft4 +15> otherright4)) {
+            crash = false;
+        }else{
+
+         clearInterval(set)
+         myFunction()
+        }
+     }
+       		function road(x,y,width,height){
+       		ctx.fillStyle="white";
+		 	ctx.fillRect(r1x,r1y,road_width,road_height)
+		 	ctx.fillRect(r1x,r2y,road_width,road_height)
+		 	ctx.fillRect(r1x,r3y,road_width,road_height)
+		 	ctx.fillRect(r1x,r4y,road_width,road_height)
+		 	  r1y+=50;
+		 	  r2y+=50
+		 	  r3y+=50
+		 	  r4y+=50
+		 	  if (r4y==canvas.height) {
+		 	  	r4y=0
+		 	  }
+		 	 
+		 	  if (r3y==canvas.height) {
+		 	  	r3y=0
+		 	  }
+
+              if (r2y==canvas.height) {
+		 	  	r2y=0
+		 	  }
+
+		 	  if (r1y==canvas.height) {
+		 	  	r1y=0
+		 	  }
+		 	 
+       		}
+       		function show(){
+          	console.log(ge+':'+gea)
+          	console.log(b3x+':'+b3y)
+
+          }
+         function movement(){
+          	 xpos=event.x-xpos_width/2;
+          	 ypos=event.y-ypos_height/2;
+          }
+          
+		 onkeydown=function move(event) {
+			if(ypos >= 395){
+				ypos=395;
+			}
+	
+		if (event.keyCode=="37"){
+			xpos -=10;
+			ge=xpos;
+			gea=ypos;
+			
+	    	
+	    	
+	
+		}
+			if (event.keyCode=="39"){
+			xpos +=10;
+		    ge=xpos;
+			gea=ypos;
+	    	
+		}
+		if (event.keyCode=="38"){
+			ypos -=10;
+
+		}
+
+        if (event.keyCode=="40"){
+			ypos +=10;
+
+	    	
+		}
+
+	}
+	</script>
+</html>
